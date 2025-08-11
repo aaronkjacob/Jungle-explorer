@@ -1,0 +1,83 @@
+[gd_scene load_steps=11 format=3 uid="uid://chpjrdt5nonfh"]
+
+[ext_resource type="Texture2D" uid="uid://dfk13ohdv0wq8" path="res://assets/enemies/slime/idle.png" id="1_srm8f"]
+[ext_resource type="Script" uid="uid://c4ba4gsbkdwr2" path="res://enemy_scenes/slime_script.gd" id="1_x6q26"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x6q26"]
+atlas = ExtResource("1_srm8f")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7uumt"]
+atlas = ExtResource("1_srm8f")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_81gwq"]
+atlas = ExtResource("1_srm8f")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jq7lk"]
+atlas = ExtResource("1_srm8f")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_srm8f"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x6q26")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7uumt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_81gwq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jq7lk")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_srm8f"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x6q26"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7uumt"]
+
+[node name="slime" type="CharacterBody2D"]
+script = ExtResource("1_x6q26")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -13)
+sprite_frames = SubResource("SpriteFrames_srm8f")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-5.96046e-08, -9)
+scale = Vector2(1, 0.897314)
+shape = SubResource("CircleShape2D_srm8f")
+
+[node name="sightArea" type="Area2D" parent="."]
+scale = Vector2(2.2, 2.08)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="sightArea"]
+position = Vector2(1, -8)
+scale = Vector2(7.609, 7)
+shape = SubResource("CircleShape2D_x6q26")
+
+[node name="hurt_hitbox" type="Area2D" parent="."]
+position = Vector2(-1, 1)
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hurt_hitbox"]
+position = Vector2(0, -9)
+shape = SubResource("CircleShape2D_7uumt")
+
+[node name="lineOfSight" type="RayCast2D" parent="."]
+collision_mask = 3
+
+[connection signal="body_entered" from="sightArea" to="." method="_on_sight_area_body_entered"]
+[connection signal="body_exited" from="sightArea" to="." method="_on_sight_area_body_exited"]
