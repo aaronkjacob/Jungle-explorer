@@ -194,8 +194,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4ntmi"]
 size = Vector2(6.66667, 8.33298)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_x3vf3"]
-size = Vector2(3.5329, 6.90056)
+[sub_resource type="CircleShape2D" id="CircleShape2D_x3vf3"]
 
 [node name="Player" type="CharacterBody2D"]
 scale = Vector2(1.2, 1.2)
@@ -221,15 +220,15 @@ wait_time = 0.3
 [node name="dashing_cooldown" type="Timer" parent="."]
 
 [node name="healthComponent" parent="." instance=ExtResource("9_x3vf3")]
-maxHealth = 10
 
 [node name="hitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("10_apopc")]
+scale = Vector2(1.961, 1.53264)
 health_component = NodePath("../healthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hitboxComponent"]
-position = Vector2(1.66667, -0.833341)
-scale = Vector2(2.35878, 2.41526)
-shape = SubResource("RectangleShape2D_x3vf3")
+position = Vector2(0.849907, -2.27243e-07)
+scale = Vector2(2.88835, 3.23478)
+shape = SubResource("CircleShape2D_x3vf3")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="timeout" from="dashing_timer" to="." method="_on_timer_timeout"]

@@ -1,0 +1,138 @@
+[gd_scene load_steps=20 format=3 uid="uid://yy4ofn7n1jq1"]
+
+[ext_resource type="Script" uid="uid://bgpnqyr706q7u" path="res://enemy_scenes/snake_script.gd" id="1_8t7x2"]
+[ext_resource type="Texture2D" uid="uid://btyuufj2r32fx" path="res://assets/enemies/snake/run.png" id="2_6lm0v"]
+[ext_resource type="Texture2D" uid="uid://ctpghyf6oje57" path="res://assets/enemies/snake/hurt.png" id="2_qyxj0"]
+[ext_resource type="PackedScene" uid="uid://ckxeiidnaa2ne" path="res://components/health_component.tscn" id="3_3snw3"]
+[ext_resource type="PackedScene" uid="uid://db6upmvk0x5ug" path="res://components/hurtbox_component.tscn" id="4_qyxj0"]
+[ext_resource type="PackedScene" uid="uid://bv3bf3jmlol3s" path="res://components/hitbox_component.tscn" id="5_i5p06"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8t7x2"]
+size = Vector2(20.779, 12.9881)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eh3eq"]
+atlas = ExtResource("2_qyxj0")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w1pc6"]
+atlas = ExtResource("2_qyxj0")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uhje4"]
+atlas = ExtResource("2_6lm0v")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3snw3"]
+atlas = ExtResource("2_6lm0v")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qyxj0"]
+atlas = ExtResource("2_6lm0v")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i5p06"]
+atlas = ExtResource("2_6lm0v")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e6hsm"]
+atlas = ExtResource("2_6lm0v")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w1h1d"]
+atlas = ExtResource("2_6lm0v")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_778ou"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eh3eq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w1pc6")
+}],
+"loop": false,
+"name": &"hurt",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uhje4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3snw3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qyxj0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i5p06")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e6hsm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w1h1d")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_e6hsm"]
+radius = 162.028
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3snw3"]
+size = Vector2(18.5194, 20.8375)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qyxj0"]
+size = Vector2(20, 30.5975)
+
+[node name="snake" type="CharacterBody2D"]
+scale = Vector2(1.2, 1.2)
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_8t7x2")
+metadata/_custom_type_script = "uid://c3rwa3e7ha5nd"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-5.96046e-08, 12)
+scale = Vector2(1.30633, 0.669316)
+shape = SubResource("RectangleShape2D_8t7x2")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_778ou")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="detection_area" type="Area2D" parent="."]
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="detection_area"]
+position = Vector2(-1, 4)
+shape = SubResource("CircleShape2D_e6hsm")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+
+[node name="healthComponent" parent="." instance=ExtResource("3_3snw3")]
+maxHealth = 50
+
+[node name="hurtboxComponent" parent="." instance=ExtResource("4_qyxj0")]
+position = Vector2(0, 6)
+scale = Vector2(1.29047, 0.636844)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hurtboxComponent"]
+position = Vector2(0.674428, 4.22536)
+scale = Vector2(1.18246, 1.15912)
+shape = SubResource("RectangleShape2D_3snw3")
+
+[node name="hitbox_component" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("5_i5p06")]
+position = Vector2(3, 1)
+health_component = NodePath("../healthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox_component"]
+position = Vector2(-3, 7.17022)
+scale = Vector2(1.3106, 0.534045)
+shape = SubResource("RectangleShape2D_qyxj0")
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

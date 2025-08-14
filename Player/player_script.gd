@@ -3,8 +3,8 @@ class_name Player
 
 @onready var animation: AnimatedSprite2D = $AnimatedSprite2D
 
-const normall_speed = 6500
-const dash_speed = 20000
+const normall_speed = 8500
+const dash_speed = 17000
 var speed = normall_speed
 
 var dashing = false
@@ -35,7 +35,6 @@ func _physics_process(delta: float) -> void:
 	if animation.flip_h == true:
 		$hitboxComponent.scale.x = abs($hitboxComponent.scale.x) * -1
 		$main_body_shape.position.x = abs($main_body_shape.position.x) * -1
-	
 			
 	if dead:
 		get_tree().reload_current_scene()
@@ -70,13 +69,15 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("dash") and dashable:
 		dash()
 
+	if taking_damage:
+		animation.play(animation_dir_y + "_hurt")
+
 	if not taking_damage:
 		velocity = direction * speed * delta
 	move_and_slide()
 
 		
 func take_damage(attack: Attack):
-			
 	velocity += (global_position - attack.position).normalized()*attack.knockback_force
 	taking_damage = true
 	animation.play(animation_dir_y + "_hurt")

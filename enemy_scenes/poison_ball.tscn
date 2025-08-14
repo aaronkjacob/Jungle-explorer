@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://c3xvovhyfrsnp"]
+
+[ext_resource type="Texture2D" uid="uid://diju1sbcx3gqn" path="res://assets/enemies/snake/bullet.png" id="1_adq7n"]
+[ext_resource type="Script" uid="uid://fwyu4xig2b3p" path="res://enemy_scenes/poison_ball_script.gd" id="1_bxog7"]
+[ext_resource type="PackedScene" uid="uid://db6upmvk0x5ug" path="res://components/hurtbox_component.tscn" id="2_bxog7"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dpa12"]
+radius = 3.0
+
+[node name="poison_ball" type="Node2D"]
+script = ExtResource("1_bxog7")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 1.5708
+texture = ExtResource("1_adq7n")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(16, -1)
+scale = Vector2(2.77958, 2.05568)
+
+[node name="hurtboxComponent" parent="." instance=ExtResource("2_bxog7")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hurtboxComponent"]
+position = Vector2(-1.90735e-06, 0)
+rotation = 1.57195
+shape = SubResource("CircleShape2D_dpa12")
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

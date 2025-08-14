@@ -10,11 +10,13 @@ func _ready() -> void:
 func damage(attack: Attack):
 	health -= attack.damage
 	
-	if health <= 0:
-		get_parent().queue_free()
+	if health <= 0 and get_parent():
+		if get_parent() is not Player:
+			get_parent().queue_free()
+		else:
+			get_tree().reload_current_scene()
 			
 	get_parent().velocity = (get_parent().global_position - attack.position).normalized()*attack.knockback_force
-
 	if get_parent() == Player:
 		get_parent().animation.play("front_hurt")
 	else:

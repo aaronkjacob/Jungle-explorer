@@ -1,7 +1,7 @@
 extends Node2D
-class_name Arrow
+class_name PoisonBall
 
-const speed = 300
+const speed = 200
 
 
 func _process(delta: float) -> void:

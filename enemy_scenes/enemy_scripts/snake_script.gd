@@ -1,0 +1,33 @@
+extends Enemy
+class_name Snake
+
+
+
+@onready var line_of_sight_ray: RayCast2D = $RayCast2D
+
+@onready var animation: AnimatedSprite2D = $AnimatedSprite2D
+
+var direction: Vector2
+@export var speed = 3000
+
+#@onready var shooting_cooldown_timer: Timer = $shooting_cooldown
+
+
+func _physics_process(delta: float) -> void:
+	# update the Enemy class for this object
+	update(delta)
+	
+	# if not taking damage the set the velocity of the enemy
+	if not taking_damage:
+		velocity = direction * speed * delta
+		
+	move_and_slide()
+	
+
+
+func _on_animated_sprite_2d_animation_finished() -> void:
+	if animation.animation == "hurt":
+		animation.play("idle")
+		taking_damage = false
+
+		
