@@ -17,7 +17,7 @@ func damage(attack: Attack):
 			get_tree().reload_current_scene()
 			
 	get_parent().velocity = (get_parent().global_position - attack.position).normalized()*attack.knockback_force
-	if get_parent() == Player:
+	if get_parent() is Player:
 		get_parent().animation.play("front_hurt")
 	else:
 		get_parent().animation.play("hurt")

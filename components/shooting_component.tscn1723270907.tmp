@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://chfdngw2us0et"]
+
+[ext_resource type="Script" uid="uid://bibyj2arbadx7" path="res://components/enemy_components/shooting_component.gd" id="1_pjte4"]
+
+[node name="shooting_component" type="Timer"]
+autostart = true
+script = ExtResource("1_pjte4")
+aim = null
+PROJECTILE = null
+
+[connection signal="timeout" from="." to="." method="_on_timeout"]

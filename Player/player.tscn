@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://cj7hlmeieg6wg" path="res://assets/player/back-hurt.png" id="2_od3ui"]
 [ext_resource type="Texture2D" uid="uid://bxux5r3slxhpr" path="res://assets/player/back-run (2).png" id="3_fhl08"]
 [ext_resource type="Texture2D" uid="uid://c36vppulpg0sd" path="res://assets/player/front-hurt.png" id="4_vtle1"]
-[ext_resource type="PackedScene" uid="uid://niskdy2phprc" path="res://bow/bow.tscn" id="6_fhl08"]
+[ext_resource type="PackedScene" uid="uid://niskdy2phprc" path="res://bow_and_arrow/bow.tscn" id="6_fhl08"]
 [ext_resource type="Texture2D" uid="uid://ctbjbwmoicea7" path="res://assets/player/front-idle.png" id="6_vtle1"]
 [ext_resource type="Texture2D" uid="uid://ci4osn6gqbsd2" path="res://assets/player/front-run.png" id="7_od3ui"]
 [ext_resource type="PackedScene" uid="uid://ckxeiidnaa2ne" path="res://components/health_component.tscn" id="9_x3vf3"]
@@ -192,7 +192,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4ntmi"]
-size = Vector2(6.66667, 8.33298)
+size = Vector2(0.858463, 13.1153)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x3vf3"]
 size = Vector2(3.5329, 6.90056)
@@ -210,7 +210,8 @@ animation = &"front_run"
 autoplay = "front_idle"
 
 [node name="main_body_shape" type="CollisionShape2D" parent="."]
-position = Vector2(1.66667, 3.33316)
+position = Vector2(1.66667, 2.08333)
+scale = Vector2(8.47393, 0.792673)
 shape = SubResource("RectangleShape2D_4ntmi")
 
 [node name="bow" parent="." instance=ExtResource("6_fhl08")]
@@ -219,9 +220,7 @@ shape = SubResource("RectangleShape2D_4ntmi")
 wait_time = 0.3
 
 [node name="dashing_cooldown" type="Timer" parent="."]
-
-[node name="healthComponent" parent="." instance=ExtResource("9_x3vf3")]
-maxHealth = 10
+wait_time = 0.7
 
 [node name="hitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("10_apopc")]
 health_component = NodePath("../healthComponent")
@@ -230,6 +229,9 @@ health_component = NodePath("../healthComponent")
 position = Vector2(1.66667, -0.833341)
 scale = Vector2(2.35878, 2.41526)
 shape = SubResource("RectangleShape2D_x3vf3")
+
+[node name="healthComponent" parent="." instance=ExtResource("9_x3vf3")]
+maxHealth = 10
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="timeout" from="dashing_timer" to="." method="_on_timer_timeout"]

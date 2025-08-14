@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://tkqco8lgvoof"]
+
+[ext_resource type="Script" uid="uid://bjqve0xbb7ir0" path="res://components/enemy_components/dashing_component.gd" id="1_ytrqg"]
+
+[node name="DashingComponent" type="Area2D"]
+script = ExtResource("1_ytrqg")
+
+[node name="dash_cooldown" type="Timer" parent="."]
+wait_time = 1.5
+
+[node name="dashing_time" type="Timer" parent="."]
+wait_time = 0.3
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="timeout" from="dash_cooldown" to="." method="_on_dash_cooldown_timeout"]
+[connection signal="timeout" from="dashing_time" to="." method="_on_dashing_time_timeout"]

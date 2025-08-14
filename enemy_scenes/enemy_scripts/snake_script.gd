@@ -8,15 +8,13 @@ class_name Snake
 @onready var animation: AnimatedSprite2D = $AnimatedSprite2D
 
 var direction: Vector2
-@export var speed = 3000
-
-#@onready var shooting_cooldown_timer: Timer = $shooting_cooldown
-
+@export var normall_speed = 3000
+var speed = normall_speed
 
 func _physics_process(delta: float) -> void:
 	# update the Enemy class for this object
 	update(delta)
-	
+
 	# if not taking damage the set the velocity of the enemy
 	if not taking_damage:
 		velocity = direction * speed * delta

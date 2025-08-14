@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://niskdy2phprc"]
 
-[ext_resource type="Script" uid="uid://b11n4ffc18usj" path="res://bow/bow_script.gd" id="1_hqfxo"]
+[ext_resource type="Script" uid="uid://b11n4ffc18usj" path="res://bow_and_arrow/bow_script.gd" id="1_hqfxo"]
 [ext_resource type="Texture2D" uid="uid://b1u53q7bn54wp" path="res://assets/bowAndArrow/bow.png" id="2_4bj44"]
 
 [node name="bow" type="Node2D"]

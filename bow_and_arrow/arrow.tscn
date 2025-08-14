@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://3xbkmws4gkok"]
 
-[ext_resource type="Script" uid="uid://dpy8bd0oi0v3g" path="res://bow/arrow_script.gd" id="1_bry5f"]
+[ext_resource type="Script" uid="uid://dpy8bd0oi0v3g" path="res://bow_and_arrow/arrow_script.gd" id="1_bry5f"]
 [ext_resource type="Texture2D" uid="uid://oi6hgd7q8qn0" path="res://assets/bowAndArrow/arrow.png" id="1_cu65o"]
 [ext_resource type="PackedScene" uid="uid://db6upmvk0x5ug" path="res://components/hurtbox_component.tscn" id="3_ubulh"]
 

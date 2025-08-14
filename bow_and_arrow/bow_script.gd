@@ -1,6 +1,6 @@
 extends Node2D
 
-const ARROW = preload("res://bow/arrow.tscn")
+const ARROW = preload("res://bow_and_arrow/arrow.tscn")
 @onready var bow: Node2D = $"."
 @onready var player: Player = $".."
 

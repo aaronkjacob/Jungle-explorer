@@ -1,4 +1,4 @@
-extends Node2D
+extends EnemyProjectile
 class_name PoisonBall
 
 const speed = 200

@@ -12,7 +12,7 @@ func _on_area_entered(area: Area2D) -> void:
 	if self.get_parent() is Arrow and area.get_parent() is Player:
 		return
 		
-	if get_parent() is PoisonBall and area.get_parent() is Enemy:
+	if get_parent() is EnemyProjectile and area.get_parent() is Enemy:
 		return
 		
 	if area is HitboxComponent:
@@ -21,7 +21,7 @@ func _on_area_entered(area: Area2D) -> void:
 				var hitbox : HitboxComponent = area
 				var attack = Attack.new()
 				attack.damage = 1
-				attack.knockback_force = 150
+				attack.knockback_force = 200
 				attack.position = global_position
 				hitbox.damage(attack)
 				if get_parent() is Arrow:

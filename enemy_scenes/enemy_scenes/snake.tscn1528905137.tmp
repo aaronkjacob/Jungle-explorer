@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://yy4ofn7n1jq1"]
+[gd_scene load_steps=22 format=3 uid="uid://yy4ofn7n1jq1"]
 
 [ext_resource type="Script" uid="uid://bgpnqyr706q7u" path="res://enemy_scenes/enemy_scripts/snake_script.gd" id="1_8t7x2"]
 [ext_resource type="Texture2D" uid="uid://btyuufj2r32fx" path="res://assets/enemies/snake/run.png" id="2_6lm0v"]
@@ -6,9 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://ckxeiidnaa2ne" path="res://components/health_component.tscn" id="3_3snw3"]
 [ext_resource type="PackedScene" uid="uid://db6upmvk0x5ug" path="res://components/hurtbox_component.tscn" id="4_qyxj0"]
 [ext_resource type="PackedScene" uid="uid://bv3bf3jmlol3s" path="res://components/hitbox_component.tscn" id="5_i5p06"]
-[ext_resource type="PackedScene" uid="uid://chfdngw2us0et" path="res://components/enemy_components/shooting_component.tscn" id="7_i5p06"]
+[ext_resource type="PackedScene" uid="uid://chfdngw2us0et" path="res://components/shooting_component.tscn" id="7_i5p06"]
 [ext_resource type="PackedScene" uid="uid://c3xvovhyfrsnp" path="res://enemy_scenes/poison_ball.tscn" id="8_qnx48"]
-[ext_resource type="PackedScene" uid="uid://tkqco8lgvoof" path="res://components/enemy_components/dashing_component.tscn" id="9_qgm6y"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8t7x2"]
 size = Vector2(20.779, 12.9881)
@@ -91,9 +90,6 @@ size = Vector2(18.5194, 20.8375)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qyxj0"]
 size = Vector2(20, 30.5975)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_mi2do"]
-radius = 82.0907
-
 [node name="snake" type="CharacterBody2D"]
 scale = Vector2(1.2, 1.2)
 collision_layer = 2
@@ -121,7 +117,7 @@ shape = SubResource("CircleShape2D_e6hsm")
 [node name="RayCast2D" type="RayCast2D" parent="."]
 
 [node name="healthComponent" parent="." instance=ExtResource("3_3snw3")]
-maxHealth = 10
+maxHealth = 4
 
 [node name="hurtboxComponent" parent="." instance=ExtResource("4_qyxj0")]
 position = Vector2(0, 6)
@@ -142,14 +138,6 @@ scale = Vector2(1.3106, 0.534045)
 shape = SubResource("RectangleShape2D_qyxj0")
 
 [node name="shooting_component" parent="." instance=ExtResource("7_i5p06")]
-cooldown_offset_range = 0.3
 PROJECTILE = ExtResource("8_qnx48")
-
-[node name="DashingComponent" parent="." instance=ExtResource("9_qgm6y")]
-dash_speed = 15000
-dashing_cooldown = 2.5
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DashingComponent"]
-shape = SubResource("CircleShape2D_mi2do")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
