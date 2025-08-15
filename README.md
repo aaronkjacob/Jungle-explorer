@@ -1,25 +1,46 @@
 🌴 Jungle Explorer
-Jungle Explorer is a 2D action-adventure game built with the Godot engine, where players navigate a lush jungle filled with hostile creatures and dynamic combat mechanics. Designed to challenge reflexes and strategy, the game features ranged weapons, enemy AI, and fast-paced movement systems.
+Jungle Explorer is a private 2D action-adventure game built with the Godot engine. Set in a vibrant jungle environment, the game features fast-paced combat, intelligent enemy AI, and modular gameplay systems. This repository is intended for internal development and collaboration.
 
-🎮 Features
-🏹 Bow and Arrow Combat: Engage enemies using a projectile-based weapon system.
+🎮 Game Overview
+🏹 Combat System: Players use a bow and arrow to defeat enemies with projectile mechanics.
 
-🐍 Enemy Variety: Includes snake enemies that shoot poison balls and others with dashing mechanics.
+🐍 Enemy AI: Includes snakes that shoot poison balls and other enemies with dashing attacks.
 
-⚔️ Dynamic AI: Enemies exhibit behaviors like shooting and dashing to keep players on their toes.
+⚔️ Modular Behaviors: Shooting and dashing are implemented as reusable components across entities.
 
-🌿 Jungle-themed Assets: Custom sprites and scenes that bring the environment to life.
+🌿 Jungle Theme: Custom sprites and scenes evoke a dense, hostile jungle atmosphere.
 
-🧩 Modular Components: Organized codebase with reusable components for player and enemy behaviors.
+📁 Project Structure
+Folder / File	Description
+Player/	Player movement, input, and combat logic
+bow_and_arrow/	Projectile and weapon mechanics
+enemy_scenes/	Enemy types and their behaviors
+components/	Reusable scripts for shooting, dashing, and other actions
+assets/	Sprites, sounds, and other media
+game.tscn	Main scene for launching the game
+project.godot	Godot project configuration
+🚀 Development Notes
+This project is built using Godot Engine and GDScript.
 
-📅 Recent Updates
-Added dashing mechanic for enemies.
+To run or edit the game, open the project in Godot and launch game.tscn.
 
-Introduced snake enemy with poison projectile attacks.
+All assets and scripts are organized for modularity and scalability.
 
-Modularized shooting components for reuse.
+🛠️ Technologies Used
+Godot Engine (GDScript)
 
-📌 Status
-This project is actively being developed. Contributions, feedback, and ideas are welcome!
+2D physics and animation
 
-Would you like me to add installation instructions, contribution guidelines, or a license section?
+Custom AI behaviors
+
+Scene-based architecture
+
+📌 Repository Status
+This is a private repository under active development. Please do not share or distribute any part of the codebase or assets externally.
+
+🧠 Future Plans
+Add health and damage systems for player and enemies
+
+Expand enemy variety and jungle hazards
+
+Implement level progression and scoring
