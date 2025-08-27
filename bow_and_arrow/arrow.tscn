@@ -1,16 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://3xbkmws4gkok"]
+[gd_scene load_steps=5 format=3 uid="uid://b64ok8la5fypc"]
 
-[ext_resource type="Script" uid="uid://dpy8bd0oi0v3g" path="res://bow_and_arrow/arrow_script.gd" id="1_bry5f"]
 [ext_resource type="Texture2D" uid="uid://oi6hgd7q8qn0" path="res://assets/bowAndArrow/arrow.png" id="1_cu65o"]
+[ext_resource type="Script" uid="uid://camjks0suoh78" path="res://bow_and_arrow/arrow_class.gd" id="1_d55jm"]
 [ext_resource type="PackedScene" uid="uid://db6upmvk0x5ug" path="res://components/hurtbox_component.tscn" id="3_ubulh"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ubulh"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8ffkd"]
 radius = 3.0
 height = 36.0
 
-[node name="arrow" type="Node2D"]
-position = Vector2(-6, 0)
-script = ExtResource("1_bry5f")
+[node name="Projectile" type="Node2D"]
+script = ExtResource("1_d55jm")
+metadata/_custom_type_script = "uid://ds36ajgvlimeu"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(20, -1)
@@ -27,7 +27,4 @@ scale = Vector2(2.77958, 2.05568)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtboxComponent"]
 position = Vector2(19, 0)
 rotation = 1.57195
-shape = SubResource("CapsuleShape2D_ubulh")
-
-[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
-[connection signal="area_entered" from="hurtboxComponent" to="." method="_on_hurtbox_component_area_entered"]
+shape = SubResource("CapsuleShape2D_8ffkd")

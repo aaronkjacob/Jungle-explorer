@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bibyj2arbadx7" path="res://components/enemy_components/shooting_component.gd" id="1_pjte4"]
 
-[node name="Node" type="Node"]
+[node name="shooting_component" type="Node"]
 script = ExtResource("1_pjte4")
 
 [node name="shooting_cooldown" type="Timer" parent="."]

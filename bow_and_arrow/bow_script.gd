@@ -23,12 +23,7 @@ func _process(_delta: float) -> void:
 		
 	if Input.is_action_just_pressed("shoot") and shooting == false:
 		
-		# make an arrow instance
-		var arrow_instance = ARROW.instantiate()
-		get_tree().root.add_child(arrow_instance)
-		arrow_instance.global_position = global_position
-		arrow_instance.rotation = rotation
-		
+		global.make_projectile_instance(rotation, 0, ARROW, get_parent())		
 		# reset shooting delay counter and set shooting to true
 		shooting = true
 		shooting_delay_counter = 0

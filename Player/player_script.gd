@@ -3,9 +3,12 @@ class_name Player
 
 @onready var animation: AnimatedSprite2D = $AnimatedSprite2D
 
-const normall_speed = 8500
-const dash_speed = 17000
+@export var normall_speed = 8500
+@export var dash_speed = 17000
 var speed = normall_speed
+@export var override_normall_speed = 0
+
+
 
 var dashing = false
 var dashable = true
@@ -22,6 +25,10 @@ var max_invinxibility = 1.5
 var dead = false
 
 var taking_damage = false
+
+func _ready() -> void:
+	if override_normall_speed:
+		normall_speed = override_normall_speed
 
 func _physics_process(delta: float) -> void:
 

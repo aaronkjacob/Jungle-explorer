@@ -1,2 +1,2 @@
-extends Node2D
+extends Projectile
 class_name EnemyProjectile

@@ -1,6 +1,6 @@
 [gd_scene load_steps=20 format=3 uid="uid://8o7a23pdl4jp"]
 
-[ext_resource type="Script" uid="uid://c64m3yyoio0l6" path="res://enemy_scenes/enemy_scripts/slime.gd" id="1_x1mqw"]
+[ext_resource type="Script" uid="uid://c64m3yyoio0l6" path="res://enemy_scenes/enemies/slime/slime.gd" id="1_x1mqw"]
 [ext_resource type="Texture2D" uid="uid://cuvsdr5pmgoo8" path="res://assets/enemies/slime/hurt.png" id="2_hgsug"]
 [ext_resource type="Texture2D" uid="uid://dfk13ohdv0wq8" path="res://assets/enemies/slime/idle.png" id="3_uwb7s"]
 [ext_resource type="PackedScene" uid="uid://ckxeiidnaa2ne" path="res://components/health_component.tscn" id="4_fvw00"]
@@ -99,6 +99,8 @@ position = Vector2(-1, 4)
 shape = SubResource("CircleShape2D_u7ikp")
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
+collision_mask = 5
+collide_with_areas = true
 
 [node name="healthComponent" parent="." instance=ExtResource("4_fvw00")]
 maxHealth = 10

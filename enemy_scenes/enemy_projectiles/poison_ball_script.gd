@@ -1,0 +1,2 @@
+extends EnemyProjectile
+class_name PoisonBall

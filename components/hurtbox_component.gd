@@ -9,11 +9,12 @@ func _process(_delta: float) -> void:
 	
 
 func _on_area_entered(area: Area2D) -> void:
-	if self.get_parent() is Arrow and area.get_parent() is Player:
-		return
-		
-	if get_parent() is EnemyProjectile and area.get_parent() is Enemy:
-		return
+	if get_parent() is Projectile:
+		if self.get_parent() is Arrow and area.get_parent() is Player:
+			return
+			
+		if get_parent() is EnemyProjectile and area.get_parent() is Enemy:
+			return
 		
 	if area is HitboxComponent:
 		if get_parent() != area.get_parent():

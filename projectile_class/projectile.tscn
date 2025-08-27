@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://c4sjyueu1jdgw"]
+
+[ext_resource type="Script" uid="uid://ds36ajgvlimeu" path="res://projectile_class/projectile_class.gd" id="1_a85iw"]
+
+[node name="Projectile" type="Node2D"]
+script = ExtResource("1_a85iw")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(5.38384, 3.27915)
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

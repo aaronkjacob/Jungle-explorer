@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://c3xvovhyfrsnp"]
 
 [ext_resource type="Texture2D" uid="uid://diju1sbcx3gqn" path="res://assets/enemies/snake/bullet.png" id="1_adq7n"]
-[ext_resource type="Script" uid="uid://fwyu4xig2b3p" path="res://enemy_scenes/poison_ball_script.gd" id="1_bxog7"]
+[ext_resource type="Script" uid="uid://fwyu4xig2b3p" path="res://enemy_scenes/enemy_projectiles/poison_ball_script.gd" id="1_bxog7"]
 [ext_resource type="PackedScene" uid="uid://db6upmvk0x5ug" path="res://components/hurtbox_component.tscn" id="2_bxog7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dpa12"]
@@ -9,6 +9,7 @@ radius = 3.0
 
 [node name="poison_ball" type="Node2D"]
 script = ExtResource("1_bxog7")
+speed = 200
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = 1.5708
