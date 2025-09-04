@@ -18,6 +18,7 @@ var speed = normall_speed
 var direction: Vector2
 
 
+
 # taking damage bool
 var taking_damage = false
 
@@ -27,6 +28,8 @@ var enemy_obj : Enemy
 var line_of_sight : RayCast2D
 var Enemies_node : Node
 
+# current targeting position
+var current_target_pos : Vector2
 
 # in this class the enemy the parameters are referring to is the slime, globlin, scout. (the enemy of the player)
 
@@ -36,30 +39,43 @@ func state_idle():
 		self.animation.play("idle")
 
 func state_chase():
-	self.direction = position.direction_to(global.player_pos)
+	self.direction = position.direction_to(current_target_pos)
 	#self.animation.play("run")  # Assuming you have a "run" animation
 	
-func check_for_line_of_sight(target_pos: Vector2):
+func point_line_raycast2d(raycast : RayCast2D, target_pos):
+	var local_target = raycast.to_local(target_pos)
+	raycast.set_target_position(local_target)
+	
+	
+func check_for_line_of_sight(_target_pos: Vector2):
+	
+	
 	#make the raycast target the player
-	var local_target = line_of_sight.to_local(target_pos)
-	line_of_sight.set_target_position(local_target)
+	point_line_raycast2d(line_of_sight,global.player_pos)
 
 	for node in get_tree().root.get_children():
 		if node is Projectile:
 			for child in node.get_children():
 				if child is CollisionObject2D:
 					line_of_sight.add_exception(child)
-
-
+	
 	var line_of_sight_colliders = line_of_sight.get_collider()
 	
+	point_line_raycast2d(line_of_sight,global.player_pos)
+	line_of_sight_colliders = line_of_sight.get_collider()
+
 	if line_of_sight_colliders:
 		if line_of_sight_colliders.get_parent() is Player:
+			current_target_pos = global.player_pos
 			return true
-		else:
-			return false
-	else:
-		return false
+			
+	var breadcrums_node =  global.player.get_node("breadcrums")
+			
+	current_target_pos = breadcrums_node.breadcrums[len(breadcrums_node.breadcrums)-1].global_position
+	
+	print(current_target_pos)
+				
+	return true
 
 func print_detection_status():
 	print("")
@@ -82,7 +98,7 @@ func check_for_in_detection_area():
 
 func update_detection_area_size():
 	if detected or taking_damage:
-		detection_area.scale = Vector2(2, 2)
+		detection_area.scale = Vector2(1.5, 1.5)
 		
 func update_detected():
 	if inDetectionArea and inLineOfSight:
@@ -122,6 +138,7 @@ func handle_animation_flip():
 			self.animation.flip_h = false
 
 func _ready() -> void:
+
 	# define detection_area
 	for child in get_children():
 		if child is Area2D and child.name == "detection_area":
@@ -130,7 +147,11 @@ func _ready() -> void:
 	# define line_of_sight
 	for child in get_children():
 		if child is RayCast2D:
-			line_of_sight = child
+			if child.name == "line_of_sight":
+				line_of_sight = child
+
+			
+			
 
 	# initialize enemy variable
 	if self is Enemy:

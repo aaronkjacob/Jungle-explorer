@@ -6,7 +6,7 @@ var player : Player
 func _ready() -> void:
 	player = get_tree().root.get_node("Game").get_node("Player")
 	
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if player:
 		player_pos = player.global_position
 

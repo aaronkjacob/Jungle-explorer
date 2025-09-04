@@ -6,6 +6,6 @@
 script = ExtResource("1_a85iw")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-scale = Vector2(5.38384, 3.27915)
+scale = Vector2(-2.71558, 2.37746)
 
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

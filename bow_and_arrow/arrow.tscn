@@ -8,7 +8,7 @@
 radius = 3.0
 height = 36.0
 
-[node name="Projectile" type="Node2D"]
+[node name="arrow" type="Node2D"]
 script = ExtResource("1_d55jm")
 metadata/_custom_type_script = "uid://ds36ajgvlimeu"
 
@@ -18,13 +18,11 @@ rotation = 1.5708
 scale = Vector2(0.596357, 0.994796)
 texture = ExtResource("1_cu65o")
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-position = Vector2(16, -1)
-scale = Vector2(2.77958, 2.05568)
-
 [node name="hurtboxComponent" parent="." instance=ExtResource("3_ubulh")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtboxComponent"]
 position = Vector2(19, 0)
 rotation = 1.57195
 shape = SubResource("CapsuleShape2D_8ffkd")
+
+[connection signal="body_entered" from="hurtboxComponent" to="." method="_on_hurtbox_component_body_entered"]

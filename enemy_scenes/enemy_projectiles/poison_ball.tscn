@@ -9,7 +9,7 @@ radius = 3.0
 
 [node name="poison_ball" type="Node2D"]
 script = ExtResource("1_bxog7")
-speed = 200
+speed = 150
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = 1.5708

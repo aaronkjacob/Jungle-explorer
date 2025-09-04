@@ -121,7 +121,11 @@ collision_mask = 3
 position = Vector2(-1, 4)
 shape = SubResource("CircleShape2D_e6hsm")
 
-[node name="RayCast2D" type="RayCast2D" parent="."]
+[node name="line_of_sight" type="RayCast2D" parent="."]
+collision_mask = 5
+collide_with_areas = true
+
+[node name="breadcrum_sight" type="RayCast2D" parent="."]
 collision_mask = 5
 collide_with_areas = true
 
@@ -158,6 +162,8 @@ script = ExtResource("9_cw2ar")
 
 [node name="enemy_shoot" parent="snake_attack_manager" instance=ExtResource("11_dgjfp")]
 PROJECTILE = ExtResource("8_5jprn")
-aim = 7.0
+aim = 10.0
+shooting_cooldown = 1.5
+cooldown_offset_range = 0.7
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

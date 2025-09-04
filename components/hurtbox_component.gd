@@ -25,5 +25,6 @@ func _on_area_entered(area: Area2D) -> void:
 				attack.knockback_force = 200
 				attack.position = global_position
 				hitbox.damage(attack)
-				if get_parent() is Arrow:
+				
+				if get_parent() is Projectile:
 					get_parent().queue_free()

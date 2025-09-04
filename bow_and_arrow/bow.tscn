@@ -11,3 +11,8 @@ position = Vector2(11, -2.98023e-08)
 rotation = 0.785398
 scale = Vector2(1.03709, 1.06391)
 texture = ExtResource("2_4bj44")
+
+[node name="shooting_delay" type="Timer" parent="."]
+wait_time = 0.3
+
+[connection signal="timeout" from="shooting_delay" to="." method="_on_shooting_delay_timeout"]
