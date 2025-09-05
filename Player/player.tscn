@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://dklusmd30dlpp"]
+[gd_scene load_steps=36 format=3 uid="uid://dklusmd30dlpp"]
 
 [ext_resource type="Script" uid="uid://o3keabpsn702" path="res://Player/player_script.gd" id="1_btcbx"]
 [ext_resource type="Texture2D" uid="uid://bk23c4alir5qv" path="res://assets/player/back-idle.png" id="2_k53q1"]
@@ -10,7 +10,6 @@
 [ext_resource type="Texture2D" uid="uid://ci4osn6gqbsd2" path="res://assets/player/front-run.png" id="7_od3ui"]
 [ext_resource type="PackedScene" uid="uid://ckxeiidnaa2ne" path="res://components/health_component.tscn" id="9_x3vf3"]
 [ext_resource type="PackedScene" uid="uid://bv3bf3jmlol3s" path="res://components/hitbox_component.tscn" id="10_apopc"]
-[ext_resource type="Script" uid="uid://btw37l651pyub" path="res://Player/breadcrums.gd" id="11_apopc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_n471f"]
 atlas = ExtResource("2_od3ui")
@@ -244,14 +243,6 @@ collision_mask = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="enemyLineOfSightTarget"]
 shape = SubResource("CircleShape2D_x3vf3")
 
-[node name="breadcrums" type="Node" parent="."]
-script = ExtResource("11_apopc")
-
-[node name="breadcrum_timer" type="Timer" parent="breadcrums"]
-wait_time = 0.2
-autostart = true
-
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="timeout" from="dashing_timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="dashing_cooldown" to="." method="_on_dashing_cooldown_timeout"]
-[connection signal="timeout" from="breadcrums/breadcrum_timer" to="breadcrums" method="_on_breadcrum_timer_timeout"]

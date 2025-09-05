@@ -69,13 +69,13 @@ func check_for_line_of_sight(_target_pos: Vector2):
 			current_target_pos = global.player_pos
 			return true
 			
-	var breadcrums_node =  global.player.get_node("breadcrums")
-			
-	current_target_pos = breadcrums_node.breadcrums[len(breadcrums_node.breadcrums)-1].global_position
-	
-	print(current_target_pos)
+#	var breadcrums_node =  global.player.get_node("breadcrums")
+#
+#	if breadcrums_node.breadcrums:
+#		current_target_pos = breadcrums_node.breadcrums[len(breadcrums_node.breadcrums)-1].global_position
+#		return true
 				
-	return true
+	return false
 
 func print_detection_status():
 	print("")
