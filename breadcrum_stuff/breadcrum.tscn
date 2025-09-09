@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bmce57c0s62jj"]
+
+[ext_resource type="Script" uid="uid://bllpq1mxtnxdj" path="res://breadcrum_stuff/breadcrum.gd" id="1_qrte1"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x8cah"]
+
+[node name="Breadcrum" type="Area2D"]
+script = ExtResource("1_qrte1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_x8cah")

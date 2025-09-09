@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://dklusmd30dlpp"]
+[gd_scene load_steps=35 format=3 uid="uid://dklusmd30dlpp"]
 
 [ext_resource type="Script" uid="uid://o3keabpsn702" path="res://Player/player_script.gd" id="1_btcbx"]
 [ext_resource type="Texture2D" uid="uid://bk23c4alir5qv" path="res://assets/player/back-idle.png" id="2_k53q1"]
@@ -197,9 +197,6 @@ size = Vector2(0.858463, 13.1153)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x3vf3"]
 size = Vector2(3.5329, 6.90056)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_x3vf3"]
-radius = 23.3333
-
 [node name="Player" type="CharacterBody2D"]
 scale = Vector2(1.2, 1.2)
 platform_on_leave = 2
@@ -235,13 +232,6 @@ shape = SubResource("RectangleShape2D_x3vf3")
 
 [node name="healthComponent" parent="." instance=ExtResource("9_x3vf3")]
 maxHealth = 10
-
-[node name="enemyLineOfSightTarget" type="Area2D" parent="."]
-collision_layer = 4
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="enemyLineOfSightTarget"]
-shape = SubResource("CircleShape2D_x3vf3")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="timeout" from="dashing_timer" to="." method="_on_timer_timeout"]

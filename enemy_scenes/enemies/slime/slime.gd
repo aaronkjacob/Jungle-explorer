@@ -1,8 +1,6 @@
 extends Enemy
 class_name Slimedashing_timer
 
-@onready var line_of_sight_ray: RayCast2D = $RayCast2D
-
 @onready var animation: AnimatedSprite2D = $AnimatedSprite2D
 
 

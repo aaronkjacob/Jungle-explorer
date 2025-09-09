@@ -17,6 +17,9 @@ var speed = normall_speed
 # direction
 var direction: Vector2
 
+# breadcrum variables
+@onready var breadcrum_search_index = len(global.Game_node.get_node("breadcrum_spawner").breadcrum_list) - 1
+@onready var breadcrum_list = global.Game_node.get_node("breadcrum_spawner").breadcrum_list
 
 
 # taking damage bool
@@ -25,8 +28,10 @@ var taking_damage = false
 # node references
 var detection_area: Area2D
 var enemy_obj : Enemy
-var line_of_sight : RayCast2D
+var line_of_sight_ray : RayCast2D
 var Enemies_node : Node
+
+var raycast_list = []
 
 # current targeting position
 var current_target_pos : Vector2
@@ -42,39 +47,71 @@ func state_chase():
 	self.direction = position.direction_to(current_target_pos)
 	#self.animation.play("run")  # Assuming you have a "run" animation
 	
-func point_line_raycast2d(raycast : RayCast2D, target_pos):
+func point_raycast2d(raycast : RayCast2D, target_pos):
 	var local_target = raycast.to_local(target_pos)
 	raycast.set_target_position(local_target)
+	line_of_sight_ray.force_raycast_update()
+	
+func check_for_raycast_collision(raycast):
+	return raycast.get_collider()
+	
+func check_for_breadcrum_collision(index):
+	var breadcrum_target = breadcrum_list[index]
+	var breadcrum_target_pos = breadcrum_target.global_position
 	
 	
-func check_for_line_of_sight(_target_pos: Vector2):
-	
-	
-	#make the raycast target the player
-	point_line_raycast2d(line_of_sight,global.player_pos)
+	for breadcrum in get_tree().root.get_children():
+		if breadcrum is Breadcrum:
+			if breadcrum != breadcrum_list[index]:
+				line_of_sight_ray.add_exception(breadcrum)
+			else:
+				line_of_sight_ray.remove_exception(breadcrum)
+				
 
+	
+	point_raycast2d(line_of_sight_ray,breadcrum_target_pos)
+	var line_of_sight_colliders = check_for_raycast_collision(line_of_sight_ray)
+
+	if line_of_sight_colliders is Breadcrum:
+		return true
+
+	return false
+
+func check_for_player_collision():
+	for breadcrum in get_tree().root.get_children():
+		if breadcrum is Breadcrum:
+			line_of_sight_ray.add_exception(breadcrum)
+				
+
+	
+	point_raycast2d(line_of_sight_ray,global.player_pos)
+	var line_of_sight_colliders = check_for_raycast_collision(line_of_sight_ray)
+
+	if line_of_sight_colliders is Player:
+		return true
+
+	return false
+
+
+func check_for_line_of_sight(_target_pos: Vector2):
 	for node in get_tree().root.get_children():
 		if node is Projectile:
 			for child in node.get_children():
 				if child is CollisionObject2D:
-					line_of_sight.add_exception(child)
-	
-	var line_of_sight_colliders = line_of_sight.get_collider()
-	
-	point_line_raycast2d(line_of_sight,global.player_pos)
-	line_of_sight_colliders = line_of_sight.get_collider()
+					line_of_sight_ray.add_exception(child)
 
-	if line_of_sight_colliders:
-		if line_of_sight_colliders.get_parent() is Player:
-			current_target_pos = global.player_pos
+	var index = breadcrum_list.size()
+	while true:
+		if index == breadcrum_list.size():
+			if check_for_player_collision():
+				current_target_pos = global.player_pos
+		elif check_for_breadcrum_collision(index):
+			current_target_pos = breadcrum_list[index].global_position
 			return true
-			
-#	var breadcrums_node =  global.player.get_node("breadcrums")
-#
-#	if breadcrums_node.breadcrums:
-#		current_target_pos = breadcrums_node.breadcrums[len(breadcrums_node.breadcrums)-1].global_position
-#		return true
-				
+		index -= 1
+		if index <= 0:
+			break
+
 	return false
 
 func print_detection_status():
@@ -86,13 +123,13 @@ func print_detection_status():
 
 func check_for_in_detection_area():
 	# check if we should chase the player
-	
-	var detection_body_collisions = detection_area.get_overlapping_bodies()
-	
+
+	var detection_area_collisions = detection_area.get_overlapping_areas()
 
 
-	for body in detection_body_collisions:
-		if body is Player:
+
+	for area in detection_area_collisions:
+		if area is Breadcrum:
 			return true
 	return false
 
@@ -138,7 +175,6 @@ func handle_animation_flip():
 			self.animation.flip_h = false
 
 func _ready() -> void:
-
 	# define detection_area
 	for child in get_children():
 		if child is Area2D and child.name == "detection_area":
@@ -148,9 +184,12 @@ func _ready() -> void:
 	for child in get_children():
 		if child is RayCast2D:
 			if child.name == "line_of_sight":
-				line_of_sight = child
+				line_of_sight_ray = child
 
-			
+	line_of_sight_ray.add_exception(global.player)
+	for node in global.player.get_children():
+		if node is CollisionObject2D:
+			line_of_sight_ray.add_exception(node)
 			
 
 	# initialize enemy variable
@@ -171,7 +210,9 @@ func _ready() -> void:
 	for enemy in Enemies_node.get_children(): # add an exeption for all collision object 2ds from other enemies
 		for enemy_child in enemy.get_children():
 			if enemy_child is CollisionObject2D:
-				line_of_sight.add_exception(enemy_child)
+				line_of_sight_ray.add_exception(enemy_child)
+	
+	
 				
 
 
