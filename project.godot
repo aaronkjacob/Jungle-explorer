@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Jungle explorer"
 run/main_scene="res://main_scenes/game.tscn"
-config/features=PackedStringArray("4.4", "Forward Plus")
+config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="uid://b6ipbibg3rc4y"
 
 [autoload]
@@ -61,3 +61,4 @@ dash={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+viewport/hdr_2d=true

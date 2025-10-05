@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://yy4ofn7n1jq1"]
+[gd_scene load_steps=23 format=3 uid="uid://yy4ofn7n1jq1"]
 
 [ext_resource type="Script" uid="uid://bgpnqyr706q7u" path="res://enemy_scenes/enemies/snake/snake_script.gd" id="1_a7rso"]
 [ext_resource type="Texture2D" uid="uid://ctpghyf6oje57" path="res://assets/enemies/snake/hurt.png" id="2_g0lhr"]
@@ -6,14 +6,11 @@
 [ext_resource type="PackedScene" uid="uid://ckxeiidnaa2ne" path="res://components/health_component.tscn" id="4_dgjfp"]
 [ext_resource type="PackedScene" uid="uid://db6upmvk0x5ug" path="res://components/hurtbox_component.tscn" id="5_s8q57"]
 [ext_resource type="PackedScene" uid="uid://bv3bf3jmlol3s" path="res://components/hitbox_component.tscn" id="6_ikx6a"]
-[ext_resource type="PackedScene" uid="uid://c3xvovhyfrsnp" path="res://enemy_scenes/enemy_projectiles/poison_ball.tscn" id="8_5jprn"]
+[ext_resource type="PackedScene" uid="uid://bfegwyqps74jo" path="res://enemy_scenes/enemy_attacks/shooting_attack.tscn" id="8_gblvf"]
 [ext_resource type="PackedScene" uid="uid://tkqco8lgvoof" path="res://components/enemy_components/dashing_component.tscn" id="9_7xp82"]
-[ext_resource type="Script" uid="uid://ctgxv0hdho6gy" path="res://enemy_scenes/enemies/snake/snake_attack_manager.gd" id="9_cw2ar"]
-[ext_resource type="PackedScene" uid="uid://cwxuc2sgf6qi3" path="res://enemy_scenes/Enemy_attacks/attacks_manager.tscn" id="10_kgk8o"]
-[ext_resource type="PackedScene" uid="uid://pdfra4joemh1" path="res://enemy_scenes/Enemy_attacks/enemy_shoot.tscn" id="11_dgjfp"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8t7x2"]
-size = Vector2(20.779, 22.1817)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kmjsw"]
+height = 25.13026
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_eh3eq"]
 atlas = ExtResource("2_g0lhr")
@@ -85,7 +82,7 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_e6hsm"]
-radius = 162.028
+radius = 201.8488
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3snw3"]
 size = Vector2(18.5194, 20.8375)
@@ -97,17 +94,17 @@ size = Vector2(20, 30.5975)
 radius = 82.0907
 
 [node name="snake" type="CharacterBody2D"]
-scale = Vector2(1.2, 1.2)
 collision_layer = 3
 collision_mask = 3
+floor_snap_length = 0.0
 script = ExtResource("1_a7rso")
-normall_speed = 3200
+normall_speed = 5500
 metadata/_custom_type_script = "uid://c3rwa3e7ha5nd"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.166667, -2.57671)
-scale = Vector2(1.30633, 0.669316)
-shape = SubResource("RectangleShape2D_8t7x2")
+scale = Vector2(1, 0.513)
+shape = SubResource("CapsuleShape2D_kmjsw")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0.166667, -11.5)
@@ -130,11 +127,11 @@ collide_with_areas = true
 
 [node name="healthComponent" parent="." instance=ExtResource("4_dgjfp")]
 position = Vector2(0.166667, -11.5)
-maxHealth = 10
 
 [node name="hurtboxComponent" parent="." instance=ExtResource("5_s8q57")]
 position = Vector2(0.166667, -5.5)
 scale = Vector2(1.29047, 0.636844)
+knockback_force = 300
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtboxComponent"]
 position = Vector2(0.674428, 4.22536)
@@ -152,19 +149,15 @@ shape = SubResource("RectangleShape2D_qyxj0")
 
 [node name="DashingComponent" parent="." instance=ExtResource("9_7xp82")]
 position = Vector2(0.166667, -11.5)
-dash_speed = 15000
+dash_speed = 19000
 dashing_cooldown = 2.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DashingComponent"]
 shape = SubResource("CircleShape2D_mi2do")
 
-[node name="snake_attack_manager" parent="." instance=ExtResource("10_kgk8o")]
-script = ExtResource("9_cw2ar")
-
-[node name="enemy_shoot" parent="snake_attack_manager" instance=ExtResource("11_dgjfp")]
-PROJECTILE = ExtResource("8_5jprn")
-aim = 10.0
-shooting_cooldown = 1.5
-cooldown_offset_range = 0.7
+[node name="shootingAttack" parent="." instance=ExtResource("8_gblvf")]
+position = Vector2(0, -3)
+shooting_cooldown_time = 1.0
+projectile_speed = 250
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

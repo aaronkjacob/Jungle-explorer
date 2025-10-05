@@ -1,17 +1,24 @@
 extends Enemy
 class_name Snake
 
+@onready var shooting_attack: ShootingAttack = $shootingAttack
+
+var hdr = 1.5
+
 @onready var animation: AnimatedSprite2D = $AnimatedSprite2D
+
+func _ready() -> void:
+	enemy_ready()
+	animation.modulate = Color(hdr, hdr, hdr)
 
 func _physics_process(delta: float) -> void:
 	# update the Enemy class for this object
 	update(delta)
-
-	# if not taking damage the set the velocity of the enemy
-	if not taking_damage:
-		velocity = direction * speed * delta
+	if detected and playerInSight:
+		shooting_attack.attack()
 		
-	move_and_slide()
+	
+
 	
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if animation.animation == "hurt":

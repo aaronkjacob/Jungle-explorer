@@ -2,17 +2,20 @@ extends CharacterBody2D
 class_name Enemy
 
 # line of sight, detection area, and detected: all variables that check if the Enemy should follow the player
+var playerInSight = false
 var inLineOfSight = false
 var inDetectionArea = false
 var detected = false
 
 # the state of the Enemy, (idle, chasing, attacking)
 enum EnemyState { IDLE, CHASE}
-var current_state: EnemyState = EnemyState.IDLE
+var current_state : EnemyState = EnemyState.IDLE
 
 # speed variables
-@export var normall_speed = 3000
-var speed = normall_speed
+@export var normall_speed : int
+var speed : float
+
+@export var contact_damage = 1
 
 # direction
 var direction: Vector2
@@ -21,6 +24,8 @@ var direction: Vector2
 @onready var breadcrum_search_index = len(global.Game_node.get_node("breadcrum_spawner").breadcrum_list) - 1
 @onready var breadcrum_list = global.Game_node.get_node("breadcrum_spawner").breadcrum_list
 
+# navigation variables
+@onready var navigation_agent_2d: NavigationAgent2D
 
 # taking damage bool
 var taking_damage = false
@@ -30,6 +35,8 @@ var detection_area: Area2D
 var enemy_obj : Enemy
 var line_of_sight_ray : RayCast2D
 var Enemies_node : Node
+
+
 
 var raycast_list = []
 
@@ -43,9 +50,28 @@ func state_idle():
 		self.direction = Vector2.ZERO
 		self.animation.play("idle")
 
-func state_chase():
-	self.direction = position.direction_to(current_target_pos)
-	#self.animation.play("run")  # Assuming you have a "run" animation
+func state_chase(delta):
+	if navigation_agent_2d:
+		navigation_agent_2d.target_position = current_target_pos
+		if navigation_agent_2d.is_navigation_finished():
+			return
+			
+		var next_path_position = navigation_agent_2d.get_next_path_position()
+	
+		
+		direction = global_position.direction_to(next_path_position).normalized()
+		
+		
+
+		#self.animation.play("run")  # Assuming you have a "run" animation
+
+func _on_velocity_computed(safe_velocity):
+	velocity = safe_velocity
+
+func navigation_setup():
+	if navigation_agent_2d:
+		await get_tree().physics_frame
+		navigation_agent_2d.target_position = global.player_pos
 	
 func point_raycast2d(raycast : RayCast2D, target_pos):
 	var local_target = raycast.to_local(target_pos)
@@ -53,9 +79,11 @@ func point_raycast2d(raycast : RayCast2D, target_pos):
 	line_of_sight_ray.force_raycast_update()
 	
 func check_for_raycast_collision(raycast):
+	line_of_sight_ray.force_raycast_update()
 	return raycast.get_collider()
 	
 func check_for_breadcrum_collision(index):
+	line_of_sight_ray.force_raycast_update()
 	var breadcrum_target = breadcrum_list[index]
 	var breadcrum_target_pos = breadcrum_target.global_position
 	
@@ -78,9 +106,12 @@ func check_for_breadcrum_collision(index):
 	return false
 
 func check_for_player_collision():
+	line_of_sight_ray.force_raycast_update()
 	for breadcrum in get_tree().root.get_children():
 		if breadcrum is Breadcrum:
 			line_of_sight_ray.add_exception(breadcrum)
+			
+	line_of_sight_ray.remove_exception(global.player)
 				
 
 	
@@ -89,7 +120,7 @@ func check_for_player_collision():
 
 	if line_of_sight_colliders is Player:
 		return true
-
+		
 	return false
 
 
@@ -99,12 +130,15 @@ func check_for_line_of_sight(_target_pos: Vector2):
 			for child in node.get_children():
 				if child is CollisionObject2D:
 					line_of_sight_ray.add_exception(child)
-
 	var index = breadcrum_list.size()
 	while true:
 		if index == breadcrum_list.size():
 			if check_for_player_collision():
 				current_target_pos = global.player_pos
+				playerInSight = true
+				return true
+			else:
+				playerInSight = false
 		elif check_for_breadcrum_collision(index):
 			current_target_pos = breadcrum_list[index].global_position
 			return true
@@ -123,19 +157,22 @@ func print_detection_status():
 
 func check_for_in_detection_area():
 	# check if we should chase the player
+	
+	if detection_area:
+		var detection_area_collisions = detection_area.get_overlapping_areas()
 
-	var detection_area_collisions = detection_area.get_overlapping_areas()
 
-
-
-	for area in detection_area_collisions:
-		if area is Breadcrum:
-			return true
+		for area in detection_area_collisions:
+			if area is Breadcrum:
+				return true
 	return false
 
 func update_detection_area_size():
-	if detected or taking_damage:
-		detection_area.scale = Vector2(1.5, 1.5)
+	if detection_area:
+		if detected or taking_damage:
+			detection_area.scale = Vector2(1.5, 1.5)
+		else:
+			detection_area.scale = Vector2.ONE
 		
 func update_detected():
 	if inDetectionArea and inLineOfSight:
@@ -174,7 +211,18 @@ func handle_animation_flip():
 		elif self.direction.x > 0:
 			self.animation.flip_h = false
 
-func _ready() -> void:
+
+func enemy_ready() -> void:
+	speed = normall_speed
+	navigation_agent_2d = NavigationAgent2D.new()
+	navigation_agent_2d.avoidance_enabled = true
+	if get_parent().get_parent().navigation_path_debug: navigation_agent_2d.debug_enabled = true
+	
+	navigation_agent_2d.connect("velocity_computed", _on_velocity_computed)
+	add_child(navigation_agent_2d)
+	
+	call_deferred("navigation_setup")
+	
 	# define detection_area
 	for child in get_children():
 		if child is Area2D and child.name == "detection_area":
@@ -216,13 +264,19 @@ func _ready() -> void:
 				
 
 
-func update(_delta: float) -> void:
-
+func update(delta: float) -> void:
 	match current_state:
 		EnemyState.IDLE:
 			state_idle()
 		EnemyState.CHASE:
-			state_chase()
+			state_chase(delta)
+			
+	# if not taking damage the set the velocity of the enemy
+	if not taking_damage:
+		velocity = direction * speed * delta
+		
+	move_and_slide()
+
 
 	handle_animation_flip()
 	check_for_transition()

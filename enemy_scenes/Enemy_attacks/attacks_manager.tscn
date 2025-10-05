@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cwxuc2sgf6qi3"]
-
-[ext_resource type="Script" uid="uid://cj5wx4ns5rqo7" path="res://enemy_scenes/Enemy_attacks/attacks_manager.gd" id="1_fq15o"]
-
-[node name="Attacks_manager" type="Node"]
-script = ExtResource("1_fq15o")

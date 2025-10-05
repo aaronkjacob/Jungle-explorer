@@ -2,6 +2,7 @@ extends Node2D
 class_name Projectile
 
 @export var speed : int = 300
+@export var damage : int = 1
 
 
 func _process(delta: float) -> void:

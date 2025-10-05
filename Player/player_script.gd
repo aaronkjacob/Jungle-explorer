@@ -36,12 +36,12 @@ func _physics_process(delta: float) -> void:
 	direction.x = Input.get_axis("left", "right")
 	direction.y = Input.get_axis("up", "down")
 
-	if animation.flip_h == false:
-		$hitboxComponent.scale.x = abs($hitboxComponent.scale.x)
-		$main_body_shape.position.x = abs($main_body_shape.position.x)
-	if animation.flip_h == true:
-		$hitboxComponent.scale.x = abs($hitboxComponent.scale.x) * -1
-		$main_body_shape.position.x = abs($main_body_shape.position.x) * -1
+	#if animation.flip_h == false:
+		#$hitboxComponent.scale.x = abs($hitboxComponent.scale.x)
+		#$main_body_shape.position.x = abs($main_body_shape.position.x)
+	#if animation.flip_h == true:
+		#$hitboxComponent.scale.x = abs($hitboxComponent.scale.x) * -1
+		#$main_body_shape.position.x = abs($main_body_shape.position.x) * -1
 			
 	if dead:
 		get_tree().reload_current_scene()

@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bfegwyqps74jo"]
+
+[ext_resource type="Script" uid="uid://0cemefkj2lub" path="res://enemy_scenes/enemy_attacks/shooting_attack.gd" id="1_mppfd"]
+
+[node name="shootingAttack" type="Node2D"]
+script = ExtResource("1_mppfd")
+
+[node name="shooting_attack_cooldown" type="Timer" parent="."]
+
+[connection signal="timeout" from="shooting_attack_cooldown" to="." method="_on_shooting_attack_cooldown_timeout"]
