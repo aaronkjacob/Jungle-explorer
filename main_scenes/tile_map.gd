@@ -3,10 +3,11 @@ extends TileMap
 @export var debug = false
 @export var sideTilesNavigationStack = true
 
-var hdr = 1
+var hdr = 1.2
 
 func _ready():
-	remove_navigation_tiles_on_overlap($navigation_layer,$walls)
+	if $walls.enabled:
+		remove_navigation_tiles_on_overlap($navigation_layer,$walls)
 	self.modulate = Color(hdr,hdr,hdr)
 
 

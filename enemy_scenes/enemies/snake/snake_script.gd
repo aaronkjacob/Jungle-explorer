@@ -15,7 +15,8 @@ func _physics_process(delta: float) -> void:
 	# update the Enemy class for this object
 	update(delta)
 	if detected and playerInSight:
-		shooting_attack.attack()
+		if shooting_attack:
+			shooting_attack.attack()
 		
 	
 

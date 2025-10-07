@@ -17,8 +17,9 @@ rotation = 1.5708
 texture = ExtResource("1_adq7n")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-position = Vector2(16, -1)
+position = Vector2(-1, -1)
 scale = Vector2(2.77958, 2.05568)
+rect = Rect2(-8.6343975, -10, 18.634398, 20)
 
 [node name="hurtboxComponent" parent="." instance=ExtResource("2_bxog7")]
 

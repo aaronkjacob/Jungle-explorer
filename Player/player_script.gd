@@ -8,6 +8,8 @@ class_name Player
 var speed = normall_speed
 @export var override_normall_speed = 0
 
+@export var max_health : int = 10
+
 
 
 var dashing = false

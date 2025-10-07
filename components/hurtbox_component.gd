@@ -32,7 +32,9 @@ func _on_area_entered(area: Area2D) -> void:
 				var attack = Attack.new()
 				attack.damage = damage
 				if get_parent() is Enemy and area.get_parent() is Player:
-					damage = get_parent().contact_damage
+					attack.damage = get_parent().contact_damage
+				if get_parent() is Enemy and area.get_parent() is Player:
+					attack.knockback_force = get_parent().knockback_force
 
 				attack.knockback_force = knockback_force
 				attack.position = global_position
@@ -40,7 +42,6 @@ func _on_area_entered(area: Area2D) -> void:
 				
 				if get_parent() is Projectile:
 					get_parent().queue_free()
-
 
 func _on_body_entered(body: Node2D) -> void:
 	if self.get_parent() is Projectile and body is TileMapLayer:

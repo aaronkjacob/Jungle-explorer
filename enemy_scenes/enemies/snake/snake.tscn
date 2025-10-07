@@ -85,7 +85,7 @@ animations = [{
 radius = 201.8488
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3snw3"]
-size = Vector2(18.5194, 20.8375)
+size = Vector2(19.114021, 22.352322)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qyxj0"]
 size = Vector2(20, 30.5975)
@@ -134,8 +134,8 @@ scale = Vector2(1.29047, 0.636844)
 knockback_force = 300
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtboxComponent"]
-position = Vector2(0.674428, 4.22536)
-scale = Vector2(1.18246, 1.15912)
+position = Vector2(0.3228693, 5.10329)
+scale = Vector2(1.18246, 1.1591198)
 shape = SubResource("RectangleShape2D_3snw3")
 
 [node name="hitbox_component" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("6_ikx6a")]
@@ -149,7 +149,7 @@ shape = SubResource("RectangleShape2D_qyxj0")
 
 [node name="DashingComponent" parent="." instance=ExtResource("9_7xp82")]
 position = Vector2(0.166667, -11.5)
-dash_speed = 19000
+dash_speed = 16000
 dashing_cooldown = 2.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DashingComponent"]
@@ -159,5 +159,6 @@ shape = SubResource("CircleShape2D_mi2do")
 position = Vector2(0, -3)
 shooting_cooldown_time = 1.0
 projectile_speed = 250
+disabled = true
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

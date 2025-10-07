@@ -183,14 +183,15 @@ animations = [{
 size = Vector2(0.590045, 9.1858835)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x3vf3"]
-size = Vector2(2.82632, 3.7953053)
+size = Vector2(2.82632, 3.871771)
 
 [node name="Player" type="CharacterBody2D"]
 position = Vector2(-1.1920929e-07, -1.9073486e-06)
-scale = Vector2(1.85, 1.85)
+scale = Vector2(2, 2)
 platform_on_leave = 2
 platform_floor_layers = 4294967040
 script = ExtResource("1_btcbx")
+max_health = 100
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-0.02702725, -1.648648)
@@ -219,7 +220,7 @@ position = Vector2(-1.6940271, -2.1486478)
 health_component = NodePath("../healthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hitboxComponent"]
-position = Vector2(1.6666669, 2.9166582)
+position = Vector2(1.6666669, 2.8243158)
 scale = Vector2(2.35878, 2.41526)
 shape = SubResource("RectangleShape2D_x3vf3")
 

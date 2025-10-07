@@ -6,9 +6,14 @@ class_name ShootingAttack
 @export var projectile_speed : int
 @onready var shooting_attack_cooldown_timer: Timer = $shooting_attack_cooldown
 
+@export var disabled : bool = false
+
 var cooling_down = true
 
 func _ready() -> void:
+	if disabled:
+		queue_free()
+	
 	shooting_attack_cooldown_timer.start()
 	if shooting_cooldown_time:
 		shooting_attack_cooldown_timer.wait_time = shooting_cooldown_time

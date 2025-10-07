@@ -1,13 +1,13 @@
 extends Enemy
 class_name Slime
 
-var hdr = 0
+var hdr = 1.8
 
 @onready var animation: AnimatedSprite2D = $AnimatedSprite2D
 
 func _ready() -> void:
 	enemy_ready()
-	animation.modulate = Color(hdr, hdr+2, hdr)
+	animation.modulate = Color(hdr, hdr, hdr)
 	
 
 func _physics_process(delta: float) -> void:

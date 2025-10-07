@@ -5,6 +5,9 @@ class_name HealthComponent
 var health : float
 
 func _ready() -> void:
+	if get_parent().max_health:
+		maxHealth = get_parent().max_health
+
 	health = maxHealth
 	
 func damage(attack: Attack):

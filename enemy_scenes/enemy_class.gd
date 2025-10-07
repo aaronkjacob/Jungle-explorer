@@ -15,7 +15,12 @@ var current_state : EnemyState = EnemyState.IDLE
 @export var normall_speed : int
 var speed : float
 
-@export var contact_damage = 1
+# hurtbox variables
+@export var contact_damage : int =  1
+@export var knockback_force : int = 200
+
+# health variables
+@export var max_health : int = 3
 
 # direction
 var direction: Vector2
@@ -216,6 +221,7 @@ func enemy_ready() -> void:
 	speed = normall_speed
 	navigation_agent_2d = NavigationAgent2D.new()
 	navigation_agent_2d.avoidance_enabled = true
+	navigation_agent_2d.target_desired_distance = 20
 	if get_parent().get_parent().navigation_path_debug: navigation_agent_2d.debug_enabled = true
 	
 	navigation_agent_2d.connect("velocity_computed", _on_velocity_computed)
