@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://8o7a23pdl4jp"]
+[gd_scene load_steps=21 format=3 uid="uid://8o7a23pdl4jp"]
 
 [ext_resource type="Script" uid="uid://c64m3yyoio0l6" path="res://enemy_scenes/enemies/slime/slime_script.gd" id="1_x1mqw"]
 [ext_resource type="Texture2D" uid="uid://cuvsdr5pmgoo8" path="res://assets/enemies/slime/hurt.png" id="2_hgsug"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://db6upmvk0x5ug" path="res://components/hurtbox_component.tscn" id="5_ii8cb"]
 [ext_resource type="PackedScene" uid="uid://bv3bf3jmlol3s" path="res://components/hitbox_component.tscn" id="6_q1ok3"]
 [ext_resource type="PackedScene" uid="uid://tkqco8lgvoof" path="res://components/enemy_components/dashing_component.tscn" id="7_hgsug"]
+[ext_resource type="PackedScene" uid="uid://b31afar2c7rx6" path="res://enemy_scenes/enemy_attacks/multi_shooting_attack.tscn" id="8_bys7u"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jq7lk"]
 atlas = ExtResource("2_hgsug")
@@ -84,6 +85,7 @@ script = ExtResource("1_x1mqw")
 normall_speed = 3500
 contact_damage = 2
 knockback_force = 300
+max_health = 5
 metadata/_custom_type_script = "uid://c3rwa3e7ha5nd"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -130,5 +132,9 @@ dashing_cooldown = 1.2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DashingComponent"]
 position = Vector2(-1, 3)
 shape = SubResource("CircleShape2D_uwb7s")
+
+[node name="multi_shooting_attack" parent="." instance=ExtResource("8_bys7u")]
+shooting_cooldown_time = 5.0
+projectile_speed = 200
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

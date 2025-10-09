@@ -22,7 +22,7 @@ func _process(_delta: float) -> void:
 		
 	if Input.is_action_just_pressed("shoot") and shooting == false:
 		
-		global.make_projectile_instance(rotation, 0, ARROW, global_position)		
+		global.make_projectile_instance(rotation_degrees, 0, ARROW, global_position)		
 		
 		# start shooting delay timer
 		shooting = true

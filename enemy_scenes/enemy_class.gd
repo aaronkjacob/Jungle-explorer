@@ -55,7 +55,7 @@ func state_idle():
 		self.direction = Vector2.ZERO
 		self.animation.play("idle")
 
-func state_chase(delta):
+func state_chase():
 	if navigation_agent_2d:
 		navigation_agent_2d.target_position = current_target_pos
 		if navigation_agent_2d.is_navigation_finished():
@@ -275,7 +275,7 @@ func update(delta: float) -> void:
 		EnemyState.IDLE:
 			state_idle()
 		EnemyState.CHASE:
-			state_chase(delta)
+			state_chase()
 			
 	# if not taking damage the set the velocity of the enemy
 	if not taking_damage:

@@ -3,6 +3,8 @@ class_name Slime
 
 var hdr = 1.8
 
+@onready var multi_shooting_attack: MultiShootingAttack = $multi_shooting_attack
+
 @onready var animation: AnimatedSprite2D = $AnimatedSprite2D
 
 func _ready() -> void:
@@ -13,6 +15,9 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	# update the Enemy class for this object
 	update(delta)
+	if detected and playerInSight:
+		if multi_shooting_attack:
+			multi_shooting_attack.attack()
 	
 	
 func _on_animated_sprite_2d_animation_finished() -> void:

@@ -21,7 +21,7 @@ func make_projectile_instance(target, target_offset, PROJECTILE, projectile_star
 	if target is Vector2:
 		projectile_instance.look_at(target)
 	else:
-		projectile_instance.rotation = target
+		projectile_instance.rotation_degrees = target
 	projectile_instance.rotation_degrees += randf_range(-target_offset,target_offset)
 	if projectile_speed:
 		projectile_instance.speed = projectile_speed
